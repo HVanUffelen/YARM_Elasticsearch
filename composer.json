@@ -1,0 +1,29 @@
+{
+    "name": "yarm/elasticsearch",
+    "description": "An add-on for the YARM Reference Manager Application. Contains the elasticsearch controller",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Yarm\\Elasticsearch\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Herbert Van Uffelen",
+            "email": "herbert.van-uffelen@univie.ac.at"
+        }
+    ],
+
+    "minimum-stability": "dev",
+    "require": {
+        "cviebrock/laravel-elasticsearch": "^8.0.1"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Yarm\\Elasticsearch\\ElasticsearchServiceProvider"
+            ]
+        }
+    }
+}
