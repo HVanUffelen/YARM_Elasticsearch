@@ -6,10 +6,9 @@ use App\Http\Controllers\BookshelfBaseController;
 use App\Http\Controllers\ExportController;
 use App\Models\File;
 use App\Models\Option;
+use App\Models\Style;
 use Illuminate\Database\Eloquent\Model;
-use function App\Models\Auth;
-use function App\Models\view;
-
+use Auth;
 
 class Elasticsearch extends Model
 {
@@ -250,7 +249,7 @@ class Elasticsearch extends Model
 
     public function makeDataAndParams($index, $ref, $id = null)
     {
-
+        $data['ref'] = $ref;
         list($allFields,$dataSet) = $this->createAllfields($ref);
         $author = $dataSet['author'];
         $title = $dataSet['title'];
