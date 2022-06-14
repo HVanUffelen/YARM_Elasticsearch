@@ -1,6 +1,6 @@
 <?php
 
-namespace yarm\elasticsearch;
+namespace Yarm\Elasticsearch\App\Modelsgit ;
 
 use App\Http\Controllers\BookshelfBaseController;
 use App\Http\Controllers\ExportController;

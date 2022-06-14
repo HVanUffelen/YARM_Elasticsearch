@@ -1,7 +1,8 @@
 <?php
 
-namespace Yarm\Elasticsearch;
+namespace Yarm\Elasticsearch\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExportController;
 use App\Models\File;
 use App\Models\Ref;
@@ -10,7 +11,7 @@ use function App\Http\Controllers\storage_path;
 use function App\Http\Controllers\view;
 use function dd;
 
-class ElasticsearchController extends Elasticsearch
+class ElasticsearchController extends Controller
 {
 
     /**
