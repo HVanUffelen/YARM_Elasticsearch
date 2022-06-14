@@ -7,6 +7,7 @@ use App\Http\Controllers\ExportController;
 use App\Models\File;
 use App\Models\Ref;
 use App\Models\Style;
+use Yarm\Elasticsearch\Models\Elasticsearch;
 use function App\Http\Controllers\storage_path;
 use function App\Http\Controllers\view;
 use function dd;
