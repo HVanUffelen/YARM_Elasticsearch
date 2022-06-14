@@ -5,6 +5,7 @@ namespace yarm\elasticsearch;
 use App\Http\Controllers\BookshelfBaseController;
 use App\Http\Controllers\ExportController;
 use App\Models\File;
+use App\Models\Option;
 use Illuminate\Database\Eloquent\Model;
 use function App\Models\Auth;
 use function App\Models\view;
@@ -94,8 +95,11 @@ class Elasticsearch extends Model
         //Search on citation?? Why should we? See line 62
 
         //max. = 5000 Todo set max in Options or .env (validation)
-        if (Auth()->user())
-            $maxElastic = Auth()->user()->maxElasticsearch();
+
+        if (Auth()->user()) {
+            $options = Option::where('user_id', '=', Auth()->user()->id)->first();
+            $maxElastic = $options['max_elastic'];
+        }
         else
             $maxElastic = 20;
 
@@ -227,8 +231,7 @@ class Elasticsearch extends Model
         }
     }
 
-    public function makeDataAndParams($index, $ref, $id = null)
-    {
+    public function createAllfields($ref) {
         $dataSet = $ref->prepareDataset();
         $data['ref'] = $ref;
 
@@ -242,7 +245,13 @@ class Elasticsearch extends Model
         }
 
         $allFields = json_encode($dataSet, JSON_UNESCAPED_UNICODE);
+        return [$allFields,$dataSet];
+    }
 
+    public function makeDataAndParams($index, $ref, $id = null)
+    {
+
+        list($allFields,$dataSet) = $this->createAllfields($ref);
         $author = $dataSet['author'];
         $title = $dataSet['title'];
         $year = $dataSet['year'];
@@ -323,7 +332,7 @@ class Elasticsearch extends Model
 
     }
 
-    public function createUpdateFile($index_name, $fileInfo, $fileName, $id, $refId, $author, $title, $year, $keywords, $primary, $citation, $languageSource, $languageTarget, $type)
+    public function createUpdateFile($index_name, $fileInfo, $fileName, $id, $refId, $author, $title, $year, $keywords, $primary, $citation, $languageSource, $languageTarget, $type,$allFields)
     {
         $file = FALSE;
         //$fileName = $fileName;
@@ -372,7 +381,8 @@ class Elasticsearch extends Model
                 'language_source' => $languageSource,
                 'language_target' => $languageTarget,
                 'type' => $type,
-                'content' => $base64
+                'content' => $base64,
+                'allFields' => $allFields
             ]
         ];
 
