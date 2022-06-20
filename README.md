@@ -12,5 +12,5 @@ publish routes, config, views, JS...
 > php artisan vendor:publish --provider="Yarm\Elasticsearch\ElasticsearchServiceProvider" --force
 
 ## Note
-* Don't forget to restarttt npm after installation
+* Don't forget to restar npm after installation
 
