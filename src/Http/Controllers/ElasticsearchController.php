@@ -179,7 +179,6 @@ class ElasticsearchController extends Controller
                 if (strpos($info, 'image') === false && strpos($info, '/zip') === false)
 
                     self::storeFilesToElasticSearch($file);
-
             }
         }
     }
