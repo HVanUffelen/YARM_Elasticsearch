@@ -89,7 +89,7 @@ class ElasticsearchController extends Controller
         else
             $primary = 'No';
 
-        $fileAndPath = storage_path() . '/app/DLBTUploads/' . $file->name;
+        $fileAndPath = storage_path() . '/app/YARMDBUploads/' . $file->name;
 
         $citation = ExportController::reformatBladeExport(view('dlbt.styles.format_as_' . Style::getNameStyle(), $data)->render());
 
@@ -172,7 +172,7 @@ class ElasticsearchController extends Controller
                 //don't save images and no zips
 
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $info = finfo_file($finfo, storage_path() . '/app/DLBTUploads/' . $file['name']); // This will return the mime-type
+                $info = finfo_file($finfo, storage_path() . '/app/' .strtolower(config('yarm.sys_name')). '/' . $file['name']); // This will return the mime-type
                 finfo_close($finfo);
 
 
@@ -239,7 +239,7 @@ class ElasticsearchController extends Controller
 
             $fileInfo = storage_path() . '/app/DLBTUploads/' . $file['name'];
 
-            $citation = ExportController::reformatBladeExport(view('dlbt.styles.format_as_' . Style::getNameStyle(), $data)->render());
+            $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . Style::getNameStyle(), $data)->render());
 
             try {
                 $res = $es->createUpdateFile($index_name, $fileInfo, $fileName, $id, $refId, $author, $title, $year, $keywords, $primary, $citation, $languageSource, $languageTarget, $type,$allFields);
