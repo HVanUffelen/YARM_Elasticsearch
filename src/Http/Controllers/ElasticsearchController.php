@@ -134,7 +134,7 @@ class ElasticsearchController extends Controller
 
         if ($query == true) {
             //toDo change Elasticsearch db - import Sek and Prim and select on Primary!
-            if (config('elasticsearch.elasticsearch_present') == 'True') {
+            if (config('elasticsearch.elasticsearch_present') == true) {
                 if ($request['search_in'] == 'all_fields') {
                     $pos = array_search('all_fields', $request['field0']);
                     $string = $request['search0'][$pos];

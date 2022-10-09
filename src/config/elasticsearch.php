@@ -2,6 +2,6 @@
 
 return [
 
-  'elasticsearch_present' => "True"
+  'elasticsearch_present' => true
 
 ];
