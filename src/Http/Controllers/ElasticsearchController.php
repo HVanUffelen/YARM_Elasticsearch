@@ -172,7 +172,7 @@ class ElasticsearchController extends Controller
                 //don't save images and no zips
 
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $info = finfo_file($finfo, storage_path() . '/app/' .strtolower(config('yarm.sys_name')). '/' . $file['name']); // This will return the mime-type
+                $info = finfo_file($finfo, storage_path() . '/app/' . 'YARMDBUploads' . '/' . $file['name']); // This will return the mime-type
                 finfo_close($finfo);
 
 
