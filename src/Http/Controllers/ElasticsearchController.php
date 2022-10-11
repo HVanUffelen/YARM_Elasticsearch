@@ -91,7 +91,7 @@ class ElasticsearchController extends Controller
 
         $fileAndPath = storage_path() . '/app/YARMDBUploads/' . $file->name;
 
-        $citation = ExportController::reformatBladeExport(view('dlbt.styles.format_as_' . Style::getNameStyle(), $data)->render());
+        $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . Style::getNameStyle(), $data)->render());
 
         if (in_array(pathinfo($fileAndPath, PATHINFO_EXTENSION), $arrayExtensions)) {
             try {
@@ -284,68 +284,4 @@ class ElasticsearchController extends Controller
         else return false;
     }
 
-    /*public function upLoadFilesToES (){
-
-        $es = new Elasticsearch();
-        if ($retryNotFound) {
-            $files = File::where('esearch', 'like', '%not f%')->get();
-        } elseif (isset($specificId)) {
-            $files = File::find($specificId)->get();
-        } else {
-            $files = File::getFileData4ES();
-        }
-
-        //$i=1;
-        foreach ($files as $file) {
-
-            $index_name = 'refs';
-            $fileName = $file['name'];
-            $id = $file['fileId'];
-            $refId = $file['refId'];
-
-            $ref = Ref::find($refId);
-            $data['ref'] = $ref;
-            $dataSet = $ref->prepareDataset();
-
-            $author = $dataSet['author'];
-            $title = $dataSet['title'];
-            $year = $dataSet['year'];
-            $keywords = $dataSet['keywords'];
-            $primary = $dataSet['primarytxt'];
-
-            if (isset($dataSet['language_source']))
-                $languageSource = $dataSet['language_source'];
-            else
-                $languageSource = 'Unknown';
-            if (isset($dataSet['language_target']))
-                $languageTarget = $dataSet['language_target'];
-            else
-                $languageTarget = 'Unknown';
-            $type = $dataSet['type'];
-
-            if ($keywords != '')
-                $pos = strpos("secondary", $keywords);
-            else
-                $pos = false;
-
-            if ($primary == '1' or $pos === false)
-                $primary = 'Yes';
-            else
-                $primary = 'No';
-
-            $fileInfo = storage_path() . '/app/DLBTUploads/' . $file['name'];
-
-            $citation = ExportController::reformatBladeExport(view('dlbt.styles.format_as_' . Style::getNameStyle(), $data)->render());
-
-            try {
-                $res = $es->createUpdateFile($index_name, $fileInfo, $fileName, $id, $refId, $author, $title, $year, $keywords, $primary, $citation, $languageSource, $languageTarget,$type);
-            } catch (\Throwable $e) {
-                $fileToSave = File::find($id);
-                $fileToSave->esearch = 'general error';
-                $fileToSave->save();
-                //echo('<p style=\"color:red;\"> Error with fileId =' . $id . ' - RefId = ' . $refId . '</p>');
-                //continue;
-            }
-
-        }*/
 }
