@@ -4,6 +4,7 @@ namespace Yarm\Elasticsearch\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\FileController;
 use App\Models\File;
 use App\Models\Ref;
 use App\Models\Style;
@@ -47,7 +48,7 @@ class ElasticsearchController extends Controller
         try {
             $es = new Elasticsearch();
         } catch (\Throwable $e) {
-            self::sendMailOnErrorES('FileController - storeFilesToElasticSearch Constructor - ', 'Error saving File to Elasticsearch!', $e, '0');
+            FileController::sendMailOnError('FileController - storeFilesToElasticSearch Constructor - ', 'Error saving File to Elasticsearch!', $e, '0');
             return back()->with('alert-danger', 'Error 2a saving file to Elasticsearch. File id =  0 (Constructor)' . '(' . $e->getMessage() . ') Please contact the administrator');
         }
 
@@ -107,7 +108,7 @@ class ElasticsearchController extends Controller
                 $fileToSave = File::find($id);
                 $fileToSave->esearch = 'error';
                 $fileToSave->save();
-                self::sendMailOnErrorES('FileController - storeFilesToElasticSearch - ', 'Error saving File to Elasticsearch!', $e, $id);
+                FileController::sendMailOnError('FileController - storeFilesToElasticSearch - ', 'Error saving File to Elasticsearch!', $e, $id);
                 return back()->with('alert-danger', 'Error 2b saving file to Elasticsearch. File id =  ' . $id . '(' . $e->getMessage() . ') Please contact the administrator');
             }
         } else {
