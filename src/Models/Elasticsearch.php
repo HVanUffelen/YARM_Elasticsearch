@@ -279,7 +279,7 @@ class Elasticsearch extends Model
         else
             $primary = 'No';
 
-        $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . Style::getNameStyle(), $data)->render());
+        $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . strtolower(style::getNameStyle()), $data)->render());
 
         if ($id == null) {
             $params = [

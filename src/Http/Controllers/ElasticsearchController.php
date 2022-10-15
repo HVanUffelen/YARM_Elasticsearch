@@ -92,7 +92,7 @@ class ElasticsearchController extends Controller
 
         $fileAndPath = storage_path() . '/app/YARMDBUploads/' . $file->name;
 
-        $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . Style::getNameStyle(), $data)->render());
+        $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . strtolower(Style::getNameStyle()), $data)->render());
 
         if (in_array(pathinfo($fileAndPath, PATHINFO_EXTENSION), $arrayExtensions)) {
             try {
@@ -240,7 +240,7 @@ class ElasticsearchController extends Controller
 
             $fileInfo = storage_path() . '/app/DLBTUploads/' . $file['name'];
 
-            $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . Style::getNameStyle(), $data)->render());
+            $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . strtolower(Style::getNameStyle()), $data)->render());
 
             try {
                 $res = $es->createUpdateFile($index_name, $fileInfo, $fileName, $id, $refId, $author, $title, $year, $keywords, $primary, $citation, $languageSource, $languageTarget, $type,$allFields);
