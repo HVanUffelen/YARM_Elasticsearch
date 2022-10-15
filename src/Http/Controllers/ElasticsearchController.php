@@ -257,11 +257,12 @@ class ElasticsearchController extends Controller
 
     static function updateAllFieldsElasticSearch()  //only use for Bulk-Upload
     {
-        $max = 10000;
+        $i = 10000;
+        $max = 15000;
         $es = new Elasticsearch();
 
         $index = 'refs';
-        for ($i = 1; $i <= $max; $i++) {
+        for ($i; $i <= $max; $i++) {
             $ref = Ref::find($i);
             if (isset($ref)) {
                 try {
