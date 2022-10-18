@@ -17,7 +17,7 @@
 
     "minimum-stability": "dev",
     "require": {
-        "cviebrock/laravel-elasticsearch": "^9.0"
+
     },
     "extra": {
         "laravel": {
