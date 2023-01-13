@@ -58,6 +58,7 @@ class ElasticsearchController extends Controller
         $refId = $file['ref_id'];
 
         $ref = Ref::find($refId);
+
         $data['ref'] = $ref;
 
         list($allFields,$dataSet) = $es->createAllfields($ref);
@@ -109,12 +110,13 @@ class ElasticsearchController extends Controller
                 $fileToSave->esearch = 'error';
                 $fileToSave->save();
                 FileController::sendMailOnError('FileController - storeFilesToElasticSearch - ', 'Error saving File to Elasticsearch!', $e, $id);
-                return back()->with('alert-danger', 'Error 2b saving file to Elasticsearch. File id =  ' . $id . '(' . $e->getMessage() . ') Please contact the administrator');
+                return 'Error 2b saving file to Elasticsearch. File id =  ' . $id . '(' . $e->getMessage() . ') Please contact the administrator';
             }
         } else {
             $fileToSave = File::find($id);
             $fileToSave->esearch = 'no - wrong extension';
             $fileToSave->save();
+            return Null;
         }
 
     }
@@ -178,7 +180,6 @@ class ElasticsearchController extends Controller
 
 
                 if (strpos($info, 'image') === false && strpos($info, '/zip') === false)
-
                     self::storeFilesToElasticSearch($file);
             }
         }
