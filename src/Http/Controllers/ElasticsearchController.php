@@ -48,8 +48,7 @@ class ElasticsearchController extends Controller
         try {
             $es = new Elasticsearch();
         } catch (\Throwable $e) {
-            FileController::sendMailOnError('FileController - storeFilesToElasticSearch Constructor - ', 'Error saving File to Elasticsearch!', $e, '0');
-            return back()->with('alert-danger', 'Error 2a saving file to Elasticsearch. File id =  0 (Constructor)' . '(' . $e->getMessage() . ') Please contact the administrator');
+            return ['FileController - storeFilesToElasticSearch Constructor - ','Error saving File to Elasticsearch!',$e,'0'];
         }
 
         $index_name = 'refs';
@@ -92,12 +91,10 @@ class ElasticsearchController extends Controller
             $primary = 'No';
 
         $fileAndPath = storage_path() . '/app/YARMDBUploads/' . $file->name;
-        dd($dataSet);
         try {
             $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . strtolower(Style::getNameStyle()), $data)->render());
         } catch (\Throwable $e) {
-            FileController::sendMailOnError('FileController - storeFilesToElasticSearch Render ', 'Error saving File to Elasticsearch!', $e, 'dateSetID =  11');
-            return back()->with('alert-danger', 'Error 2a saving file to Elasticsearch. Render! ' . '(' . $e->getMessage() . ') Please contact the administrator');
+            return ['FileController - storeFilesToElasticSearch Render ','Error saving File to Elasticsearch!',$e,$dataSet['id']];
         }
 
         if (in_array(pathinfo($fileAndPath, PATHINFO_EXTENSION), $arrayExtensions)) {
@@ -114,8 +111,7 @@ class ElasticsearchController extends Controller
                 $fileToSave = File::find($id);
                 $fileToSave->esearch = 'error';
                 $fileToSave->save();
-                FileController::sendMailOnError('FileController - storeFilesToElasticSearch - ', 'Error saving File to Elasticsearch!', $e, $id);
-                return 'Error 2b saving file to Elasticsearch. File id =  ' . $id . '(' . $e->getMessage() . ') Please contact the administrator';
+                return ['FileController - storeFilesToElasticSearch (Save File) ','Error saving File to Elasticsearch!',$e,$dataSet['id']];
             }
         } else {
             $fileToSave = File::find($id);
