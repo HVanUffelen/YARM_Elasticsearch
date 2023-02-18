@@ -47,6 +47,7 @@ class ElasticsearchController extends Controller
         $arrayExtensions = ['pdf', 'txt', 'html', 'xml', 'doc', 'docx', 'odt'];
         try {
             $es = new Elasticsearch();
+            return ['FileController - storeFilesToElasticSearch Constructor - ','Error saving File to Elasticsearch!','TestError','0'];
         } catch (\Throwable $e) {
             return ['FileController - storeFilesToElasticSearch Constructor - ','Error saving File to Elasticsearch!',$e,'0'];
         }
