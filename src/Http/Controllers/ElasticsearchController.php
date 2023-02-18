@@ -95,7 +95,7 @@ class ElasticsearchController extends Controller
         try {
             $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . strtolower(Style::getNameStyle()), $data)->render());
         } catch (\Throwable $e) {
-            FileController::sendMailOnError('FileController - storeFilesToElasticSearch Render ', 'Error saving File to Elasticsearch!', $e, 'dateSetID = ' . $dataSet['id']);
+            FileController::sendMailOnError('FileController - storeFilesToElasticSearch Render ', 'Error saving File to Elasticsearch!', $e, 'dateSetID =  11');
             return back()->with('alert-danger', 'Error 2a saving file to Elasticsearch. Render! ' . '(' . $e->getMessage() . ') Please contact the administrator');
         }
 
