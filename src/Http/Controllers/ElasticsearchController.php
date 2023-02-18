@@ -92,7 +92,7 @@ class ElasticsearchController extends Controller
 
         $fileAndPath = storage_path() . '/app/YARMDBUploads/' . $file->name;
         try {
-            $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . strtolower(Style::getNameStyle()), $data)->render());
+            $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_a_' . strtolower(Style::getNameStyle()), $data)->render());
         } catch (\Throwable $e) {
             return ['FileController - storeFilesToElasticSearch Render ','Error saving File to Elasticsearch!',$e,$dataSet['id']];
         }
