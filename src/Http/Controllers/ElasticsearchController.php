@@ -92,6 +92,7 @@ class ElasticsearchController extends Controller
             $primary = 'No';
 
         $fileAndPath = storage_path() . '/app/YARMDBUploads/' . $file->name;
+        dd($dataSet);
         try {
             $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . strtolower(Style::getNameStyle()), $data)->render());
         } catch (\Throwable $e) {
