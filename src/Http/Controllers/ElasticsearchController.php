@@ -47,9 +47,8 @@ class ElasticsearchController extends Controller
         $arrayExtensions = ['pdf', 'txt', 'html', 'xml', 'doc', 'docx', 'odt'];
         try {
             $es = new Elasticsearch();
-            return ['FileController - storeFilesToElasticSearch Constructor - ','Error saving File to Elasticsearch!','TestError','0'];
         } catch (\Throwable $e) {
-            return ['FileController - storeFilesToElasticSearch Constructor - ','Error saving File to Elasticsearch!',$e,'0'];
+            return ['FileController - storeFilesToElasticSearch Constructor - ','Error saving File to Elasticsearch!',$e,$file['id']];
         }
 
         $index_name = 'refs';
@@ -95,7 +94,7 @@ class ElasticsearchController extends Controller
         try {
             $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . strtolower(Style::getNameStyle()), $data)->render());
         } catch (\Throwable $e) {
-            return ['FileController - storeFilesToElasticSearch Render ','Error saving File to Elasticsearch!',$e,$id];
+            return ['FileController - storeFilesToElasticSearch Render Citation - ','Error saving File to Elasticsearch!',$e, json_encode($data)];
         }
 
         if (in_array(pathinfo($fileAndPath, PATHINFO_EXTENSION), $arrayExtensions)) {
