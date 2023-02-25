@@ -91,10 +91,11 @@ class ElasticsearchController extends Controller
             $primary = 'No';
 
         $fileAndPath = storage_path() . '/app/YARMDBUploads/' . $file->name;
-        try {
+
+       try {
             $citation = ExportController::reformatBladeExport(view('ydbviews.styles.format_as_' . strtolower(Style::getNameStyle()), $data)->render());
         } catch (\Throwable $e) {
-            return [json_encode($data),'Error saving File to Elasticsearch! (Render Citation)',$e, $id];
+            return [json_encode($data),'Error saving File to Elasticsearch! (Render Citation). Session Roles = ' . session::get('roles'),$e, $id];
         }
 
         if (in_array(pathinfo($fileAndPath, PATHINFO_EXTENSION), $arrayExtensions)) {
